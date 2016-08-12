@@ -1271,7 +1271,14 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 			$attributes['id'] = $post->ID;
 			$default_subject = sprintf( _x( '%1$s %2$s', '%1$s = blog name, %2$s = post title', 'jetpack' ), $default_subject, Grunion_Contact_Form_Plugin::strip_tags( $post->post_title ) );
 			$post_author = get_userdata( $post->post_author );
-			$default_to .= $post_author->user_email;
+
+			if ( ! empty( $post_author->user_email ) ) {
+				// The user could be deleted.
+				$default_to .= $post_author->user_email;
+			} else {
+				$default_to .= get_option( 'admin_email' );
+			}
+
 		}
 
 		// Keep reference to $this for parsing form fields
