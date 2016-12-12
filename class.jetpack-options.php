@@ -75,6 +75,26 @@ class Jetpack_Options {
 	}
 
 	/**
+	 * Returns the requested option, and ensures it's autoloaded in the future.
+	 * This does _not_ adjust the prefix in any way (does not prefix jetpack_%)
+	 *
+	 * @param string $name Option name
+	 * @param mixed $default (optional)
+	 *
+	 * @return mixed|void
+	 */
+	public static function get_option_and_ensure_autoload( $name, $default ) {
+		$value = get_option( $name );
+
+		if ( $value === false && $default !== false ) {
+			update_option( $name, $default );
+			$value = $default;
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Updates the single given option.  Updates jetpack_options or jetpack_$name as appropriate.
  	 *
 	 * @param string $name  Option name
