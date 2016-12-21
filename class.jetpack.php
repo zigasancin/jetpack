@@ -23,6 +23,8 @@ jetpack_do_activate (bool)
 */
 
 class Jetpack {
+	// Dummy change to trigger a build
+
 	public $xmlrpc_server = null;
 
 	private $xmlrpc_verification = null;
