@@ -6,7 +6,7 @@ class Jetpack_Options {
 	 * An array that maps a grouped option type to an option name.
 	 * @var array
 	 */
-	private static $grouped_options = array(
+	protected static $grouped_options = array(
 		'compact' => 'jetpack_options',
 		'private' => 'jetpack_private_options'
 	);
