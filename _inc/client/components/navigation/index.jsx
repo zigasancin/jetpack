@@ -26,7 +26,7 @@ export const Navigation = React.createClass( {
 					<NavItem
 						path="#/dashboard"
 						selected={ ( this.props.route.path === '/dashboard' ) || ( this.props.route.path === '/' ) }>
-						{ __( 'At a Glance', { context: 'Navigation item.' } ) }
+						{ __( 'Activity', { context: 'Navigation item.' } ) }
 					</NavItem>
 					<NavItem
 						path="#/apps"
@@ -47,7 +47,7 @@ export const Navigation = React.createClass( {
 					<NavItem
 						path="#/dashboard"
 						selected={ ( this.props.route.path === '/dashboard' ) || ( this.props.route.path === '/' ) }>
-						{ __( 'At a Glance', { context: 'Navigation item.' } ) }
+						{ __( 'Activity', { context: 'Navigation item.' } ) }
 					</NavItem>
 				);
 			} else if ( ( this.props.route.path === '/dashboard' ) || ( this.props.route.path === '/' ) ) {

@@ -25,7 +25,7 @@ class Jetpack_Network_Sites_List_Table extends WP_List_Table {
 		// Deal with bulk actions if any were requested by the user
 		$this->process_bulk_action();
 
-		$sites = get_sites( array( 
+		$sites = get_sites( array(
 			'site__not_in' => array( get_current_blog_id() ),
 			'archived' => false,
 		) );
@@ -55,7 +55,7 @@ class Jetpack_Network_Sites_List_Table extends WP_List_Table {
 
 		$actions = array(
 			'edit'      => '<a href="' . esc_url( network_admin_url( 'site-info.php?id=' . $item->blog_id ) )  .  '">' . esc_html__( 'Edit', 'jetpack' ) . '</a>',
-			'dashboard' => '<a href="' . esc_url( get_admin_url( $item->blog_id, '', 'admin' ) ) . '">' . esc_html__( 'Dashboard', 'jetpack' ) . '</a>',
+			'dashboard' => '<a href="' . esc_url( get_admin_url( $item->blog_id, '', 'admin' ) ) . '">' . esc_html__( 'Activity', 'jetpack' ) . '</a>',
 			'view'      => '<a href="' . esc_url( get_site_url( $item->blog_id, '', 'admin' ) ) . '">' . esc_html__( 'View', 'jetpack' ) . '</a>',
 			'jetpack-' . $item->blog_id => '<a href="' . esc_url( $jp_url ) . '">Jetpack</a>',
 		);

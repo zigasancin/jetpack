@@ -48,7 +48,7 @@ export const Masthead = React.createClass( {
 									href="#/dashboard"
 									primary={ isDashboardView && ! isStatic }
 								>
-									{ __( 'Dashboard' ) }
+									{ __( 'Activity' ) }
 								</Button>
 								<Button
 									compact={ true }
