@@ -284,7 +284,7 @@ abstract class WPCOM_JSON_API_Endpoint {
 
 
 	protected function get_secure_body( $secure_key ) {
-		$response =  Jetpack_Client::wpcom_json_api_request_as_blog( sprintf( '/sites/%d/secure', Jetpack_Options::get_option('id' ) ), '1.1', array( 'method' => 'POST' ), array( 'secure_key' => $secure_key ) );
+		$response =  Jetpack_Client::wpcom_json_api_request_as_blog( sprintf( '/sites/%d/secure-request', Jetpack_Options::get_option('id' ) ), '1.1', array( 'method' => 'POST' ), array( 'secure_key' => $secure_key ) );
 		if ( 200 !== $response['response']['code'] ) {
 			return null;
 		}
