@@ -147,7 +147,7 @@ class Jetpack_Sync_Module_Posts extends Jetpack_Sync_Module {
 	// Expands wp_insert_post to include filtered content
 	function filter_post_content_and_add_links( $post_object ) {
 		global $post;
-		$post = $post_object;
+		$post = get_post( $post_object->ID );
 
 		// return non existant post 
 		$post_type = get_post_type_object( $post->post_type );
