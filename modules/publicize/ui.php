@@ -150,7 +150,7 @@ class Publicize_UI {
 
 			<div id="publicize-services-block">
 				<?php
-				$services = $this->publicize->get_services( 'all' );
+				$services = $this->publicize->get_services();
 				$total_num_of_services = count ( $services );
 				$service_num = 0;?>
 
@@ -531,7 +531,7 @@ jQuery( function($) {
 
 		$user_id = empty( $post->post_author ) ? $GLOBALS['user_ID'] : $post->post_author;
 		$services = $this->publicize->get_services( 'connected' );
-		$available_services = $this->publicize->get_services( 'all' );
+		$available_services = $this->publicize->get_services();
 
 		if ( ! is_array( $available_services ) )
 			$available_services = array();
