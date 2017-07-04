@@ -1,55 +1,23 @@
 jQuery( document ).ready( function( $ ) {
-	var jsonAPIbase = 'https://public-api.wordpress.com/rest/v1',
-		APIqueue = [];
-
-	function getCommentLikeCounts() {
-		$( '.comment-like-count' ).each( function() {
-			var blogId = $( this ).attr( 'data-blog-id' ),
-				commentId = $( this ).attr( 'data-comment-id' );
-
-			APIqueue.push( '/sites/' + blogId + '/comments/' + commentId + '/likes' );
-		} );
-
-		fetchCounts();
-	}
-
-	function showCount( commentId, count ) {
-		if ( count < 1 ) {
-			return;
-		}
-
-		$( '#comment-like-count-' + commentId ).find( '.like-count' ).hide().text( count ).fadeIn();
-	}
-
-	function fetchCounts() {
-		var batchRequest = {
-			path: '/batch',
-			data: 'urls[]=' + APIqueue.join( '&urls[]=' ),
-			success: function( response ) {
-				for ( var path in response ) {
-					if ( ! response[ path ].error_data ) {
-						var urlPieces = path.split( '/' ),
-							commentId = urlPieces[ 4 ];
-						showCount( commentId, response[ path ].found );
+	var APIqueue = [];
+	$( '.comment-like-count' ).each( function() {
+		APIqueue.push( '/sites/' + $( this ).attr( 'data-blog-id' ) + '/comments/' + $( this ).attr( 'data-comment-id' ) + '/likes' );
+	} );
+	$.ajax( {
+		type: 'GET',
+		url: 'https://public-api.wordpress.com/rest/v1/batch',
+		dataType: 'jsonp',
+		data: 'urls[]=' + APIqueue.join( '&urls[]=' ),
+		success: function( response ) {
+			for ( var path in response ) {
+				if ( response.hasOwnProperty( path ) && ! response[ path ].error_data ) {
+					var commentId = path.split( '/' )[ 4 ],
+						count = response[ path ].found;
+					if ( count >= 1 ) {
+						$( '#comment-like-count-' + commentId ).find( '.like-count' ).hide().text( count ).fadeIn();
 					}
 				}
-			},
-			error: function() {}
-		};
-
-		request( batchRequest );
-	}
-
-	function request( options ) {
-		return $.ajax( {
-			type: 'GET',
-			url: jsonAPIbase + options.path,
-			dataType: 'jsonp',
-			data: options.data,
-			success: options.success,
-			error: options.error
-		} );
-	}
-
-	getCommentLikeCounts();
+			}
+		}
+	} );
 } );
