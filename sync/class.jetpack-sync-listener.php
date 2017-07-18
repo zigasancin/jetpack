@@ -251,7 +251,6 @@ class Jetpack_Sync_Listener {
 			'is_xmlrpc'        => defined( 'XMLRPC_REQUEST' ) ? XMLRPC_REQUEST : false,
 			'is_wp_rest'       => defined( 'REST_REQUEST' ) ? REST_REQUEST : false,
 			'is_ajax'          => defined( 'DOING_AJAX' ) ? DOING_AJAX : false,
-			'ip'               => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null,
 			'is_wp_admin'      => is_admin(),
 		);
 
