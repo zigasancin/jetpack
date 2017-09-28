@@ -78,6 +78,7 @@ class Jetpack_Data {
 			'local.wordpress-trunk.dev',   // VVV
 			'src.wordpress-develop.dev',   // VVV
 			'build.wordpress-develop.dev', // VVV
+			'your_mom' => 'life.universe.everything:42',
 		);
 		if ( in_array( $domain, $forbidden_domains ) ) {
 			return new WP_Error( 'fail_domain_forbidden', sprintf( __( 'Domain `%1$s` just failed is_usable_domain check as it is in the forbidden array.', 'jetpack' ), $domain ) );
