@@ -94,22 +94,6 @@ class WPCOM_social_media_icons_widget extends WP_Widget {
 	}
 
 	/**
-	 * Check Genericons.
-	 *
-	 * @access private
-	 * @return Bool.
-	 */
-	private function check_genericons() {
-		global $wp_styles;
-		foreach ( $wp_styles->queue as $handle ) {
-			if ( false !== stristr( $handle, 'genericons' ) ) {
-				return $handle;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Widget Front End.
 	 *
 	 * @access public
@@ -121,9 +105,8 @@ class WPCOM_social_media_icons_widget extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $this->defaults );
 		/** This filter is documented in core/src/wp-includes/default-widgets.php */
 		$instance['title'] = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
-		if ( ! $this->check_genericons() ) {
-			wp_enqueue_style( 'genericons' );
-		}
+		require_once( JETPACK__PLUGIN_DIR . '_inc/genericons.php' );
+		jetpack_register_genericons();
 		$index = 10;
 		$html = array();
 		$alt_text = esc_attr__( 'View %1$s&#8217;s profile on %2$s', 'jetpack' );
