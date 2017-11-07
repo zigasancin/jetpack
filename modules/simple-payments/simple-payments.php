@@ -296,6 +296,7 @@ class Jetpack_Simple_Payments {
 			'rewrite'               => false,
 			'capabilities'          => $product_capabilities,
 			'show_in_rest'          => true,
+			'rest_base'             => self::$post_type_product . 's',
 		);
 		register_post_type( self::$post_type_product, $product_args );
 	}
