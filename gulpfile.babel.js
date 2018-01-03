@@ -160,12 +160,12 @@ function doSass( done ) {
 			util.log( 'Dashboard CSS finished.' );
 			doRTL( 'main' );
 		} );
-	util.log( 'Building dops-components CSS bundle...' );
+	util.log( 'Building components CSS bundle...' );
 	gulp.src( './_inc/build/*dops-style.css' )
 		.pipe( autoprefixer( 'last 2 versions', 'ie >= 8' ) )
 		.pipe( gulp.dest( './_inc/build' ) )
 		.on( 'end', function() {
-			util.log( 'dops-components CSS finished.' );
+			util.log( 'components CSS finished.' );
 			doRTL( 'dops', done );
 		} );
 }
