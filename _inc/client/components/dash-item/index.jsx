@@ -26,6 +26,7 @@ import {
 	getSiteAdminUrl,
 	userCanManageModules
 } from 'state/initial-state';
+import JetpackBanner from 'components/jetpack-banner';
 
 /**
  * Track clicks on monitor settings
@@ -46,6 +47,7 @@ export class DashItem extends Component {
 		module: PropTypes.string,
 		pro: PropTypes.bool,
 		isModule: PropTypes.bool,
+		needsUpgrade: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -53,7 +55,22 @@ export class DashItem extends Component {
 		module: '',
 		pro: false,
 		isModule: true,
+		needsUpgrade: false,
 	};
+
+	renderContent() {
+		if ( this.props.needsUpgrade ) {
+			return <JetpackBanner title={ this.props.content } href="#" plan="is-personal-plan" />;
+		}
+
+		return (
+			<Card className="jp-dash-item__card" href={ this.props.href }>
+				<div className="jp-dash-item__content">
+					{ this.props.children }
+				</div>
+			</Card>
+		);
+	}
 
 	render() {
 		let toggle, proButton = '';
@@ -148,11 +165,7 @@ export class DashItem extends Component {
 				>
 					{ this.props.userCanToggle ? toggle : '' }
 				</SectionHeader>
-				<Card className="jp-dash-item__card" href={ this.props.href }>
-					<div className="jp-dash-item__content">
-						{ this.props.children }
-					</div>
-				</Card>
+				{ this.renderContent() }
 			</div>
 		);
 	}

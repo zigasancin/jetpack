@@ -32,6 +32,8 @@ const renderCard = ( props ) => (
 		className={ props.className }
 		status={ props.status }
 		pro={ true }
+		needsUpgrade = { props.needsUpgrade || false }
+		content = { props.content }
 	>
 		<p className="jp-dash-item__description">
 			{ props.content }
@@ -106,12 +108,8 @@ class DashBackups extends Component {
 			return renderCard( {
 				className: 'jp-dash-item__is-inactive',
 				status: 'no-pro-uninstalled-or-inactive',
-				content: __( 'To automatically back up your entire site, please {{a}}upgrade your account{{/a}}.', {
-					components: {
-						a:
-							<a href={ `https://jetpack.com/redirect/?source=aag-backups&site=${ siteRawUrl }` } target="_blank" rel="noopener noreferrer" />
-					}
-				} ),
+				content: __( 'Upgrade to back up your site.' ),
+				needsUpgrade: true
 			} );
 		}
 

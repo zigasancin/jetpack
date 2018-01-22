@@ -96,7 +96,7 @@ class AtAGlance extends Component {
 
 		// Hack to remove VP cards if rewind is in a weird state; not active but available.
 		// @todo we need some actual messaging here.
-		hideVaultPressCards && securityCards.splice( 1, 2 );
+		isRewindActive && securityCards.splice( 1, 2 );
 
 		// Maybe add the rewind card
 		isRewindActive && securityCards.unshift( <DashActivity { ...settingsProps } siteRawUrl={ this.props.siteRawUrl } /> );
