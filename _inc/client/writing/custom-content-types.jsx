@@ -11,7 +11,7 @@ import CompactFormToggle from 'components/form/form-toggle/compact';
  */
 import { FormFieldset } from 'components/forms';
 import { ModuleSettingsForm as moduleSettingsForm } from 'components/module-settings/module-settings-form';
-import { getModule } from 'state/modules';
+import { getModule, getModuleOverride } from 'state/modules';
 import { isModuleFound as _isModuleFound } from 'state/search';
 import SettingsCard from 'components/settings-card';
 import SettingsGroup from 'components/settings-group';
@@ -46,6 +46,7 @@ export class CustomContentTypes extends React.Component {
 		}
 
 		const module = this.props.module( 'custom-content-types' );
+		const disabledByOverride = ( 'inactive' === this.props.getModuleOverride( 'custom-content-types' ) );
 		return (
 			<SettingsCard
 				{ ...this.props }
@@ -54,7 +55,7 @@ export class CustomContentTypes extends React.Component {
 				<SettingsGroup hasChild module={ module } support={ module.learn_more_button }>
 					<CompactFormToggle
 								checked={ this.state.testimonial }
-								disabled={ this.props.isSavingAnyOption( 'jetpack_testimonial' ) }
+								disabled={ this.props.isSavingAnyOption( 'jetpack_testimonial' ) || disabledByOverride }
 								onChange={ () => this.updateCPTs( 'testimonial' ) }>
 						<span className="jp-form-toggle-explanation">
 							{
@@ -77,7 +78,7 @@ export class CustomContentTypes extends React.Component {
 					</FormFieldset>
 					<CompactFormToggle
 								checked={ this.state.portfolio }
-								disabled={ this.props.isSavingAnyOption( 'jetpack_portfolio' ) }
+								disabled={ this.props.isSavingAnyOption( 'jetpack_portfolio' ) || disabledByOverride }
 								onChange={ () => this.updateCPTs( 'portfolio' ) }>
 						<span className="jp-form-toggle-explanation">
 							{
@@ -108,7 +109,8 @@ export default connect(
 	( state ) => {
 		return {
 			module: ( module_name ) => getModule( state, module_name ),
-			isModuleFound: ( module_name ) => _isModuleFound( state, module_name )
+			isModuleFound: ( module_name ) => _isModuleFound( state, module_name ),
+			getModuleOverride: ( module_name ) => getModuleOverride( state, module_name )
 		};
 	}
 )( moduleSettingsForm( CustomContentTypes ) );
