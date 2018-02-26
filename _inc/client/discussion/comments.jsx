@@ -135,6 +135,7 @@ class CommentsComponent extends React.Component {
 											activated={ !! this.props.getOptionValue( 'wpcom_publish_comments_with_markdown', 'markdown' ) }
 											toggling={ this.props.isSavingAnyOption( [ 'markdown', 'wpcom_publish_comments_with_markdown' ] ) }
 											toggleModule={ this.updateFormStateByMarkdown }
+											overrideCondition="inactive"
 										>
 											<span className="jp-form-toggle-explanation">
 												{

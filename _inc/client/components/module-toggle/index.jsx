@@ -21,12 +21,14 @@ class ModuleToggleComponent extends Component {
 		disabled: PropTypes.bool,
 		className: PropTypes.string,
 		compact: PropTypes.bool,
-		id: PropTypes.string
+		id: PropTypes.string,
+		overrideCondition: PropTypes.string
 	};
 
 	static defaultProps = {
 		activated: false,
-		disabled: false
+		disabled: false,
+		overrideCondition: ''
 	};
 
 	toggleModule = () => {
@@ -47,6 +49,10 @@ class ModuleToggleComponent extends Component {
 
 	isDisabledByOverride = () => {
 		const override = this.props.getModuleOverride( this.props.slug );
+		if ( this.props.overrideCondition ) {
+			return this.props.overrideCondition === override;
+		}
+
 		return !! override;
 	};
 
