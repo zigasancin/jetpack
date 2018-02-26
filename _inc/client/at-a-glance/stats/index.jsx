@@ -31,8 +31,9 @@ import {
 	fetchStatsData,
 	getActiveStatsTab as _getActiveStatsTab
 } from 'state/at-a-glance';
-import { getModules } from 'state/modules';
+import { getModules, getModuleOverride } from 'state/modules';
 import { emptyStatsCardDismissed } from 'state/settings';
+import JetpackBanner from 'components/jetpack-banner';
 
 class DashStats extends Component {
 	constructor( props ) {
@@ -273,6 +274,20 @@ class DashStats extends Component {
 			return null;
 		}
 
+		// If module has been forced off, let the user know.
+		if ( 'inactive' === this.props.getModuleOverride( 'stats' ) ) {
+			return (
+				<div>
+					<DashSectionHeader label={ __( 'Site Stats' ) } />
+					<JetpackBanner
+						title={ __( 'Site stats', { context: 'Banner header' } ) }
+						icon="cog"
+						description={ __( 'Stats has been disabled by a site administrator.' ) }
+					/>
+				</div>
+			);
+		}
+
 		const range = this.props.activeTab();
 		return (
 			<div>
@@ -305,6 +320,7 @@ export default connect(
 			connectUrl: getConnectUrl( state ),
 			statsData: getStatsData( state ) !== 'N/A' ? getStatsData( state ) : getInitialStateStatsData( state ),
 			isEmptyStatsCardDismissed: emptyStatsCardDismissed( state ),
+			getModuleOverride: module_name => getModuleOverride( state, module_name ),
 		};
 	},
 	( dispatch ) => {
