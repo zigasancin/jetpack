@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import { getModule } from 'state/modules';
+import { getModule, getModuleOverride } from 'state/modules';
 import { getSettings } from 'state/settings';
 import { isDevMode, isUnavailableInDevMode } from 'state/connection';
 import { isModuleFound } from 'state/search';
@@ -67,6 +67,7 @@ export class Traffic extends React.Component {
 					foundStats && (
 						<SiteStats
 							{ ...commonProps }
+							getModuleOverride={ this.props.getModuleOverride }
 						/>
 					)
 				}
@@ -101,6 +102,7 @@ export class Traffic extends React.Component {
 						<SEO
 							{ ...commonProps }
 							configureUrl={ 'https://wordpress.com/settings/seo/' + this.props.siteRawUrl }
+							getModuleOverride={ this.props.getModuleOverride }
 						/>
 					)
 				}
@@ -109,6 +111,7 @@ export class Traffic extends React.Component {
 						<GoogleAnalytics
 							{ ...commonProps }
 							configureUrl={ 'https://wordpress.com/settings/analytics/' + this.props.siteRawUrl }
+							getModuleOverride={ this.props.getModuleOverride }
 						/>
 					)
 				}
@@ -123,6 +126,7 @@ export class Traffic extends React.Component {
 					foundVerification && (
 						<VerificationServices
 							{ ...commonProps }
+							getModuleOverride={ this.props.getModuleOverride }
 						/>
 					)
 				}
@@ -138,6 +142,7 @@ export default connect(
 			settings: getSettings( state ),
 			isDevMode: isDevMode( state ),
 			isUnavailableInDevMode: module_name => isUnavailableInDevMode( state, module_name ),
+			getModuleOverride: module_name => getModuleOverride( state, module_name ),
 			isModuleFound: ( module_name ) => isModuleFound( state, module_name ),
 			lastPostUrl: getLastPostUrl( state )
 		};
