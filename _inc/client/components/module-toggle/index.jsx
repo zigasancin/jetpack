@@ -1,13 +1,20 @@
-
 /**
  * External dependencies
  */
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import React from 'react';
 import CompactFormToggle from 'components/form/form-toggle/compact';
 import analytics from 'lib/analytics';
 
-export class ModuleToggle extends React.Component {
+/**
+ * Internal dependencies
+ */
+import { getModuleOverride } from 'state/modules';
+
+class ModuleToggleComponent extends Component {
+	static displayName = 'ModuleToggle';
+
 	static propTypes = {
 		toggleModule: PropTypes.func,
 		activated: PropTypes.bool,
@@ -38,12 +45,17 @@ export class ModuleToggle extends React.Component {
 		);
 	};
 
+	isDisabledByOverride = () => {
+		const override = this.props.getModuleOverride( this.props.slug );
+		return !! override;
+	};
+
 	render() {
 		return (
-			<CompactFormToggle checked={ this.props.activated }
+			<CompactFormToggle checked={ this.props.activated || this.props.isModuleActivated }
 				toggling={ this.props.toggling }
 				className = { this.props.className }
-				disabled = { this.props.disabled }
+				disabled = { this.props.disabled || this.isDisabledByOverride() }
 				id = { this.props.id }
 				onChange={ this.toggleModule }>
 				{ this.props.children }
@@ -51,3 +63,9 @@ export class ModuleToggle extends React.Component {
 		);
 	}
 }
+
+export const ModuleToggle = connect( state => {
+	return {
+		getModuleOverride: module_name => getModuleOverride( state, module_name ),
+	};
+} )( ModuleToggleComponent );
