@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CompactFormToggle from 'components/form/form-toggle/compact';
 import analytics from 'lib/analytics';
+import { translate as __ } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -56,6 +57,21 @@ class ModuleToggleComponent extends Component {
 		return !! override;
 	};
 
+	getDisabledReason = () => {
+		if ( ! this.isDisabledByOverride() ) {
+			return null;
+		}
+		const override = this.props.getModuleOverride( this.props.slug );
+		switch ( override ) {
+			case 'active':
+				return __( 'This feature has been enabled by 3rd-party code.' );
+			case 'inactive':
+				return __( 'This feature has been disabled by 3rd-party code.' );
+			default:
+				return __( 'This feature is being managed by 3rd-party code.' );
+		}
+	};
+
 	render() {
 		return (
 			<CompactFormToggle checked={ this.props.activated || this.props.isModuleActivated }
@@ -63,7 +79,8 @@ class ModuleToggleComponent extends Component {
 				className = { this.props.className }
 				disabled = { this.props.disabled || this.isDisabledByOverride() }
 				id = { this.props.id }
-				onChange={ this.toggleModule }>
+				onChange={ this.toggleModule }
+				disabledReason={ this.getDisabledReason() }>
 				{ this.props.children }
 			</CompactFormToggle>
 		);
